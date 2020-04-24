@@ -31,15 +31,21 @@
         "{{ frr_package_url }}/frr-{{ frr_version }}-{{ frr_url_part }}.el7.centos.x86_64.rpm",
       ]
   become: true
+  when:
+    - ansible_distribution_major_version != "8"
 
 - name: redhat | Create Python Tools FRR {{ frr_version }} install
   set_fact:
     frr_package_deb: "{{ frr_package_url }}/frr-pythontools-{{ frr_version }}-{{ frr_url_part }}.el7.centos.x86_64.rpm"
+  when:
+    - ansible_distribution_major_version != "8"
 
 - name: redhat | Combine FRR {{ frr_version }} and tools
   set_fact:
     frr_debs: "{{ frr_debs }} + [ '{{ frr_package_deb }}' ]"
-  when: frr_reload|bool
+  when: 
+    - frr_reload|bool
+    - ansible_distribution_major_version != "8"
 
 - name: redhat | Installing FRR {{ frr_version }}
   yum:
