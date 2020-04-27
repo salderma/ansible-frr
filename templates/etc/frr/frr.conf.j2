@@ -84,6 +84,9 @@ router bgp {{ asn }}
 {%           if neighbor_data['password'] | default(False) %}
   neighbor {{ neighbor }} password {{ neighbor_data['password'] }}
 {%           endif %}
+{%           if neighbor_data['prefix_list'] | default(False) %}
+  neighbor {{ neighbor }} prefix-list {{ neighbor_data['prefix_list'] }} out
+{%           endif %}
 {%           if neighbor_data['multihop'] | default(False) %}
   neighbor {{ neighbor }} ebgp-multihop {{ neighbor_data['multihop'] }}
 {%           endif %}
