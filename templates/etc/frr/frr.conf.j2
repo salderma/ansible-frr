@@ -243,6 +243,9 @@ route-map {{ map_name }} {{ seq }}
 {%       if seq_data['prefix_list'] is defined %}
   match ip address prefix-list {{ seq_data['prefix_list'] }}
 {%       endif %}
+{%       if seq_data['as-path'] is defined %}
+  set as-path prepend {{ seq_data['as-path'] }}
+{%       endif %}
 {%       if seq_data['community'] is defined %}
   set community {{ seq_data['community'] }} additive
 {%       endif %}
